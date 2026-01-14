@@ -1,0 +1,138 @@
+{
+  "name": "guagua-i18n",
+  "displayName": "guagua-i18n",
+  "description": "Inline English annotations and search for multilingual keys",
+  "version": "0.0.1",
+  "publisher": "guazi",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:multilingual.refresh",
+    "onCommand:multilingual.search",
+    "onCommand:multilingual.switchSource",
+    "onCommand:multilingual.showSource",
+    "onCommand:multilingual.openResult",
+    "onView:multilingual.searchResults"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "multilingual.refresh",
+        "title": "guagua i18n: 刷新英文映射"
+      },
+      {
+        "command": "multilingual.search",
+        "title": "guagua i18n: 搜索中文或 key"
+      },
+      {
+        "command": "multilingual.switchSource",
+        "title": "guagua i18n: 切换接口地址"
+      },
+      {
+        "command": "multilingual.showSource",
+        "title": "guagua i18n: 查看当前接口"
+      },
+      {
+        "command": "multilingual.openResult",
+        "title": "guagua i18n: 打开搜索结果"
+      }
+    ],
+    "viewsContainers": {
+      "secondarySidebar": [
+        {
+          "id": "multilingualSearch",
+          "title": "多语言搜索",
+          "icon": "resources/multilingual.svg"
+        }
+      ]
+    },
+    "views": {
+      "multilingualSearch": [
+        {
+          "id": "multilingual.searchResults",
+          "name": "搜索结果"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Guazi Multilingual",
+      "properties": {
+        "multilingual.source.url": {
+          "type": "string",
+          "default": "https://i.guazi-apps.com/api/multilingual/1/en",
+          "description": "多语言英文映射接口"
+        },
+        "multilingual.source.rules": {
+          "type": "array",
+          "default": [],
+          "description": "按工作区匹配的接口地址列表，match 为项目名或路径关键字",
+          "items": {
+            "type": "object",
+            "properties": {
+              "match": {
+                "type": "string",
+                "description": "工作区名称或路径关键字"
+              },
+              "url": {
+                "type": "string",
+                "description": "多语言接口地址"
+              }
+            },
+            "required": [
+              "match",
+              "url"
+            ]
+          }
+        },
+        "multilingual.cache.ttlMinutes": {
+          "type": "number",
+          "default": 360,
+          "minimum": 1,
+          "description": "英文映射缓存时长(分钟)"
+        },
+        "multilingual.inline.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否启用行内英文标注"
+        },
+        "multilingual.inline.maxLength": {
+          "type": "number",
+          "default": 80,
+          "minimum": 10,
+          "description": "行内英文最大展示长度"
+        },
+        "multilingual.inline.color": {
+          "type": "string",
+          "default": "#9b8d7e",
+          "description": "行内英文颜色"
+        },
+        "multilingual.search.maxResults": {
+          "type": "number",
+          "default": 200,
+          "minimum": 1,
+          "description": "搜索最大结果数"
+        },
+        "multilingual.search.includePattern": {
+          "type": "string",
+          "default": "**/*.{ts,tsx,js,jsx,vue,svelte,html,md,json}",
+          "description": "搜索文件的包含模式(glob)"
+        },
+        "multilingual.search.excludePattern": {
+          "type": "string",
+          "default": "**/{node_modules,.next}/**",
+          "description": "搜索文件的排除模式(glob)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "lint": "echo 'no lint'",
+    "test": "echo 'no test'"
+  }
+}
